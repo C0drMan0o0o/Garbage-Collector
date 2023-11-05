@@ -8,7 +8,7 @@ using std::byte;
 
 class GC_Heap {
 private:
-    MyLinkedList freeList;
+    MyLinkedList allocationList;
     byte* memStart;
     size_t size;
     byte* currentPtr;
@@ -19,6 +19,6 @@ public:
     byte* getCurrentPtr() const;
     byte* allocate(size_t);
     void deallocate(byte*, size_t);
-    void printFreeList() const;
+    void printAllocationList() const;
     vector<MyLinkedList::Node*> getNodes() const;
 };

@@ -20,11 +20,10 @@ private:
     GC(const GC&) = delete;
     GC& operator =(const GC&) = delete;
 public:
+    static unsigned long generation;
     static GC* getInstance();
-    void setMarkedTrue(garbageCollectedObject*);
-    void setMarkedFalse(garbageCollectedObject*);
-    void mark(Scope*);
-    void sweep(Scope*);
+    void mark(unsigned long);
+    void sweep();
     bool exceedsSize(size_t);
     void enterScope();
     void exitScope();

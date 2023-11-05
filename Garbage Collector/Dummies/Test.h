@@ -7,12 +7,9 @@
 struct Test : public garbageCollectedObject {
 private:
     std::vector<int> myVector;
-    Vec* innerV = new Vec;
+    Vec* innerV;
 public:
-//    Test(){
-//        GC::getInstance()->getObjectGraph().addEdge(this, innerV);
-//        innerV->createdWithinObject = true;
-//    }
+    Test(void* ptr) : garbageCollectedObject(ptr), innerV(new Vec(this)) {}
     size_t getSize() override {return sizeof(*this);}
 };
 

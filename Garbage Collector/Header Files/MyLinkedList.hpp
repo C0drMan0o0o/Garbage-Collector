@@ -26,6 +26,7 @@ public:
     void print() const;
 private:
     Node* head;
+    Node* tail;
     int count = 0;
 };
 

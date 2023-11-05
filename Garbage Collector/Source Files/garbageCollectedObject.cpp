@@ -12,29 +12,40 @@ size_t garbageCollectedObject::totalSize = 0;
 
 size_t garbageCollectedObject::getTotalSize(){return totalSize;}
 
-garbageCollectedObject::garbageCollectedObject(){
-    // Check if this object is within another data structure in the object graph
-    vector<garbageCollectedObject*> objects = GC::getInstance()->getObjectGraph().getObjects();
+//garbageCollectedObject::garbageCollectedObject(){
+//    // Check if this object is within another data structure in the object graph
+//    vector<garbageCollectedObject*> objects = GC::getInstance()->getObjectGraph().getObjects();
+//
+//    for(garbageCollectedObject* obj : objects){
+//        size_t objSize = 0;
+//
+//        for(auto node : GC::getInstance()->getHeap()->getNodes()){
+//            if(obj == (garbageCollectedObject*) node->memStart){
+//                objSize = ((byte*) node->memEnd - (byte*) node->memStart);
+//                cout << "objSize for " << obj << " = " << objSize << endl;
+//                break;
+//            }
+//        }
+//
+//        byte* objEndMem = (byte*) obj + objSize;
+//
+//        if(this > obj && this < (garbageCollectedObject*) objEndMem){
+//            GC::getInstance()->getObjectGraph().addEdge(obj, this);
+//            this->createdWithinObject = true;
+//            cout << "createdWithinObject = " << this->createdWithinObject << endl;
+//            break;
+//        }
+//    }
+//}
 
-    for(garbageCollectedObject* obj : objects){
-        size_t objSize = 0;
-
-        for(auto node : GC::getInstance()->getHeap()->getNodes()){
-            if(obj == (garbageCollectedObject*) node->memStart){
-                objSize = ((byte*) node->memEnd - (byte*) node->memStart);
-                cout << "objSize for " << obj << " = " << objSize << endl;
-                break;
-            }
-        }
-
-        byte* objEndMem = (byte*) obj + objSize;
-
-        if(this > obj && this < (garbageCollectedObject*) objEndMem){
-            GC::getInstance()->getObjectGraph().addEdge(obj, this);
-            this->createdWithinObject = true;
-            break;
-        }
+garbageCollectedObject::garbageCollectedObject(void* parent){
+    GC::getInstance()->getObjectGraph().addObject((garbageCollectedObject*) this);
+    if(parent != nullptr){
+        GC::getInstance()->getObjectGraph().addEdge((garbageCollectedObject*) parent, this);
+        this->createdWithinObject = true;
+        cout << "Added edge between two objects" << endl;
     }
+    this->generation = GC::generation;
 }
 
 void* garbageCollectedObject::operator new(size_t size){

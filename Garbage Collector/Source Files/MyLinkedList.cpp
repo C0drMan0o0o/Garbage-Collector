@@ -9,18 +9,17 @@ void MyLinkedList::insertAtTail(byte* memStart, byte* memEnd, bool allocated){
     Node* newNode = new Node(memStart, memEnd, allocated);
     if(head == NULL){
         head = newNode;
+        tail = newNode;
     }
     else{
-        Node* current = head;
-        while(current->next != NULL){
-            current = current->next;
-        }
-        current->next = newNode;
+        tail->next = newNode;
+        tail = newNode;
     }
     newNode->next = NULL;
     count++;
 }
 
+// Maybe delete this method since it isn't used
 void MyLinkedList::deleteNode(byte* memStart, byte* memEnd, bool allocated) {
     if (head == NULL) {
         return;
@@ -43,6 +42,7 @@ void MyLinkedList::deleteNode(byte* memStart, byte* memEnd, bool allocated) {
     }
 }
 
+// Maybe delete this method since it isn't used
 void MyLinkedList::deleteAtHead(){
     if(head == NULL){
         return;
@@ -62,13 +62,12 @@ vector<MyLinkedList::Node*> MyLinkedList::getNodes() const {
         nodeList.emplace_back(current);
         current = current->next;
     }
-    delete current;
     return nodeList;
 }
 
 bool MyLinkedList::isEmpty() const {return this->head == nullptr;}
 
-int MyLinkedList::getCount() const {return this->count;}
+int MyLinkedList::getCount() const {return this->count;} // Maybe delete this method since it isn't used
 
 void MyLinkedList::editNode(byte* memStart, byte* memEnd, bool changeTo) {
     Node* current = head;
@@ -81,7 +80,8 @@ void MyLinkedList::editNode(byte* memStart, byte* memEnd, bool changeTo) {
         current = current->next;
     }
 
-    cout << "The node you're attempting to alter was not found!" << endl;
+//    cout << "The node you're attempting to alter was not found!" << endl;
+    cout << "Node Details - memStart(" << memStart << "), memEnd(" << memEnd << ")" << endl;
 }
 
 void MyLinkedList::print() const {

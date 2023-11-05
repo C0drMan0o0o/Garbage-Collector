@@ -5,11 +5,8 @@
 struct Animal : public garbageCollectedObject {
     int age;
     std::string name;
-    Person* innerP = new Person;
+    Person* innerP;
     size_t getSize() override {return sizeof(*this);};
-//    Animal(){
-//        GC::getInstance()->getObjectGraph().addEdge(this, innerP);
-//        innerP->createdWithinObject = true;
-//    }
+    Animal(void* ptr) : garbageCollectedObject(ptr), innerP(new Person(this)) {}
 };
 

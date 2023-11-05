@@ -7,6 +7,8 @@ using std::ostream;
 
 GC* GC::instancePtr = nullptr;
 
+unsigned long GC::generation = 0;
+
 GC* GC::getInstance() {
     if(instancePtr == nullptr){
         instancePtr = new GC;
@@ -17,21 +19,18 @@ GC* GC::getInstance() {
     }
 }
 
-void GC::setMarkedTrue(garbageCollectedObject* ptr){ptr->marked = true;}
 
-void GC::setMarkedFalse(garbageCollectedObject* ptr){ptr->marked = false;}
-
-void GC::mark(Scope* scope) {
+void GC::mark(unsigned long generation) {
     for(garbageCollectedObject* obj : this->getObjectGraph().getObjects()){
-        if((byte*) obj >= scope->getMemStart() && (byte*) obj < scope->getMemEnd() && obj->getRefCount() == 1){
-            this->setMarkedFalse(obj);
+        if(obj->generation >= GC::generation && obj->getRefCount() == 1){
+            obj->marked = false;
         }
     }
     cout << "\nAfter Marking:" << endl;
     this->getObjectGraph().printGraph();
 }
 
-void GC::sweep(Scope* scope) {
+void GC::sweep() {
     // Create a set to keep track of live objects
     std::unordered_set<garbageCollectedObject*> liveObjects;
 
@@ -73,18 +72,14 @@ bool GC::exceedsSize(size_t size){
 }
 
 void GC::enterScope() {
-    Scope* scope = new Scope(this->getHeap()->getCurrentPtr());
-    this->getScopeStack().push(scope);
+    GC::generation++;
 }
 
 void GC::exitScope() {
-    Scope* currentScope = this->getScopeStack().pop();
-    currentScope->setMemEnd(this->getHeap()->getCurrentPtr());
+    this->mark(GC::generation);
+    this->sweep();
     
-    this->mark(currentScope);
-    this->sweep(currentScope);
-    
-    delete currentScope;
+    GC::generation--;
 }
 
 MyGraph& GC::getObjectGraph() {return this->objectGraph;}

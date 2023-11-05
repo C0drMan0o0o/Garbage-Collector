@@ -11,21 +11,8 @@ struct MyPair : public garbageCollectedObject {
 private:
     Vec* v1;
     Vec* v2;
-//    void init(){
-//        GC::getInstance()->getObjectGraph().addEdge(this, v1);
-//        v1->createdWithinObject = true;
-//        GC::getInstance()->getObjectGraph().addEdge(this, v2);
-//        v2->createdWithinObject = true;
-//    }
 public:
-    MyPair(){
-        v1 = new Vec(0,0);
-        v2 = new Vec(0,0);
-//        this->init();
-    }
-    MyPair(Vec* v1, Vec* v2) : v1(v1), v2(v2) {
-//        this->init();
-    }
+    MyPair(void* ptr) : garbageCollectedObject(ptr), v1(new Vec(this)), v2(new Vec(this)) {}
     size_t getSize() override {return sizeof(*this);}
     friend inline ostream& operator <<(ostream& stream, const MyPair& myPair){
         stream << "V1:" << endl;

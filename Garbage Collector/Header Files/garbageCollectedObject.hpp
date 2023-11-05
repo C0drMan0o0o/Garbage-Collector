@@ -4,9 +4,10 @@
 class garbageCollectedObject {
     friend class GC;
     template<typename T>
-    friend T* createArray(size_t);
+    friend T* createArray(void*, size_t);
 public:
     bool createdWithinObject = false; // Set to true for any objects created on the heap within another object that derives from the garbageCollectedObject class
+    unsigned long generation;
 private:
     static size_t totalSize; // Size (in bytes) of all objects that of classes or structs that derive from this base class
     bool marked = true; // All objects are set to marked (reachable) when instantiated
@@ -18,7 +19,7 @@ public:
     virtual size_t getSize() = 0;
     bool isReachable() const;
     static size_t getTotalSize();
-    garbageCollectedObject();
+    garbageCollectedObject(void*);
     virtual ~garbageCollectedObject(){}
     static void* operator new(size_t);
     static void* operator new[](size_t);
@@ -30,14 +31,15 @@ public:
 };
 
 template <typename T>
-T* createArray(size_t numOfElements) {
+T* createArray(void *base, size_t numOfElements) {
     // Allocate memory for the array
     T* array = (T*) malloc(sizeof(T) * numOfElements);
     std::cout << "Array address = " << array << std::endl;
 
     // Initialise each element in the array using the default constructor of the templated object
     for (size_t i=0;i<numOfElements;i++) {
-        ::new (array + i) T;
+        
+        ::new (array + i) T(base);
 //        array[i] = T();
         std::cout << "element address = " << &array[i] << std::endl;
     }

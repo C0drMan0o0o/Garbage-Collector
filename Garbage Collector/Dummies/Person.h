@@ -6,11 +6,8 @@
 struct Person : public garbageCollectedObject {
     int age;
     std::string name;
-    Test* innerT = new Test;
+    Test* innerT;
     size_t getSize() override {return sizeof(*this);};
-//    Person(){
-//        GC::getInstance()->getObjectGraph().addEdge(this, innerT);
-//        innerT->createdWithinObject = true;
-//    }
+    Person(void* ptr) : garbageCollectedObject(ptr), innerT(new Test(this)) {}
 };
 
