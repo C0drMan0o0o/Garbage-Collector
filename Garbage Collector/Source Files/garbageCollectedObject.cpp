@@ -30,16 +30,6 @@ void* garbageCollectedObject::operator new(size_t size){
     return ptr;
 }
 
-void* garbageCollectedObject::operator new[](size_t size){
-    // Allocate memory for the array
-    void* array = GC::getInstance()->getHeap()->allocate(size);
-    ((garbageCollectedObject*) array)->isArray = true;
-    totalSize += size;
-    GC::getInstance()->getObjectGraph().addObject((garbageCollectedObject*) array);
-    std::cout << "Array address = " << array << std::endl;
-    return array;
-}
-
 void garbageCollectedObject::operator delete(void* ptr, size_t size) {
     totalSize -= size;
     GC::getInstance()->getObjectGraph().removeObject((garbageCollectedObject*) ptr);

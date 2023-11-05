@@ -22,7 +22,6 @@ public:
     garbageCollectedObject(void*);
     virtual ~garbageCollectedObject(){}
     static void* operator new(size_t);
-    static void* operator new[](size_t);
     void operator delete(void*, size_t);
     void operator delete[](void*, size_t);
     garbageCollectedObject* addRef();
