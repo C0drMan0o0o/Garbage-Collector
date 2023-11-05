@@ -19,42 +19,6 @@ void MyLinkedList::insertAtTail(byte* memStart, byte* memEnd, bool allocated){
     count++;
 }
 
-// Maybe delete this method since it isn't used
-void MyLinkedList::deleteNode(byte* memStart, byte* memEnd, bool allocated) {
-    if (head == NULL) {
-        return;
-    } else if (head->memStart == memStart && head->memEnd == memEnd && head->allocated == allocated) {
-        deleteAtHead();
-        count--;
-        return;
-    } else {
-        Node* current = head;
-        while (current->next != NULL) {
-            if (current->next->memStart == memStart && current->next->memEnd == memEnd && current->next->allocated == allocated) {
-                Node* delNode = current->next;
-                current->next = current->next->next;
-                delete delNode;
-                count--;
-                return;
-            }
-            current = current->next;
-        }
-    }
-}
-
-// Maybe delete this method since it isn't used
-void MyLinkedList::deleteAtHead(){
-    if(head == NULL){
-        return;
-    }
-    else{
-        Node* delNode = head;
-        head = head->next;
-        delete delNode;
-        count--;
-    }
-}
-
 vector<MyLinkedList::Node*> MyLinkedList::getNodes() const {
     vector<Node*> nodeList;
     Node* current = head;

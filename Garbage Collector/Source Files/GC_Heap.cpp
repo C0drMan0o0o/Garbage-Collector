@@ -14,10 +14,6 @@ GC_Heap::GC_Heap(size_t size) : size(size) {
     currentPtr = memStart;
 }
 
-byte* GC_Heap::getMemStart() const {return this->memStart;}
-
-byte* GC_Heap::getMemEnd() const {return this->memStart + this->size;}
-
 byte* GC_Heap::getCurrentPtr() const {return this->currentPtr;}
 
 byte* GC_Heap::allocate(size_t allocationSize) {

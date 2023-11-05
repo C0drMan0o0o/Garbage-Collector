@@ -8,10 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C51366762AF6AC91003BBF6E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C51366752AF6AC91003BBF6E /* main.cpp */; };
-		C51366972AF6AE1F003BBF6E /* MyQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C513668F2AF6AE1E003BBF6E /* MyQueue.cpp */; };
 		C51366982AF6AE1F003BBF6E /* GC_Heap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C51366902AF6AE1E003BBF6E /* GC_Heap.cpp */; };
-		C51366992AF6AE1F003BBF6E /* Scope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C51366912AF6AE1E003BBF6E /* Scope.cpp */; };
-		C513669A2AF6AE1F003BBF6E /* MyStack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C51366922AF6AE1E003BBF6E /* MyStack.cpp */; };
 		C513669B2AF6AE1F003BBF6E /* garbageCollectedObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C51366932AF6AE1E003BBF6E /* garbageCollectedObject.cpp */; };
 		C513669C2AF6AE1F003BBF6E /* GC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C51366942AF6AE1E003BBF6E /* GC.cpp */; };
 		C513669D2AF6AE1F003BBF6E /* MyGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C51366952AF6AE1E003BBF6E /* MyGraph.cpp */; };
@@ -33,18 +30,12 @@
 /* Begin PBXFileReference section */
 		C51366722AF6AC91003BBF6E /* Garbage Collector */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Garbage Collector"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C51366752AF6AC91003BBF6E /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		C51366872AF6AE0F003BBF6E /* Scope.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Scope.hpp; sourceTree = "<group>"; };
 		C51366882AF6AE0F003BBF6E /* garbageCollectedObject.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = garbageCollectedObject.hpp; sourceTree = "<group>"; };
 		C51366892AF6AE0F003BBF6E /* GC_Heap.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GC_Heap.hpp; sourceTree = "<group>"; };
-		C513668A2AF6AE0F003BBF6E /* MyStack.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MyStack.hpp; sourceTree = "<group>"; };
-		C513668B2AF6AE0F003BBF6E /* MyQueue.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MyQueue.hpp; sourceTree = "<group>"; };
 		C513668C2AF6AE0F003BBF6E /* MyGraph.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MyGraph.hpp; sourceTree = "<group>"; };
 		C513668D2AF6AE0F003BBF6E /* GC.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GC.hpp; sourceTree = "<group>"; };
 		C513668E2AF6AE0F003BBF6E /* MyLinkedList.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MyLinkedList.hpp; sourceTree = "<group>"; };
-		C513668F2AF6AE1E003BBF6E /* MyQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyQueue.cpp; sourceTree = "<group>"; };
 		C51366902AF6AE1E003BBF6E /* GC_Heap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GC_Heap.cpp; sourceTree = "<group>"; };
-		C51366912AF6AE1E003BBF6E /* Scope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scope.cpp; sourceTree = "<group>"; };
-		C51366922AF6AE1E003BBF6E /* MyStack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyStack.cpp; sourceTree = "<group>"; };
 		C51366932AF6AE1E003BBF6E /* garbageCollectedObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = garbageCollectedObject.cpp; sourceTree = "<group>"; };
 		C51366942AF6AE1E003BBF6E /* GC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GC.cpp; sourceTree = "<group>"; };
 		C51366952AF6AE1E003BBF6E /* MyGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MyGraph.cpp; sourceTree = "<group>"; };
@@ -103,9 +94,6 @@
 				C513668D2AF6AE0F003BBF6E /* GC.hpp */,
 				C513668C2AF6AE0F003BBF6E /* MyGraph.hpp */,
 				C513668E2AF6AE0F003BBF6E /* MyLinkedList.hpp */,
-				C513668B2AF6AE0F003BBF6E /* MyQueue.hpp */,
-				C513668A2AF6AE0F003BBF6E /* MyStack.hpp */,
-				C51366872AF6AE0F003BBF6E /* Scope.hpp */,
 			);
 			path = "Header Files";
 			sourceTree = "<group>";
@@ -118,9 +106,6 @@
 				C51366942AF6AE1E003BBF6E /* GC.cpp */,
 				C51366952AF6AE1E003BBF6E /* MyGraph.cpp */,
 				C51366962AF6AE1F003BBF6E /* MyLinkedList.cpp */,
-				C513668F2AF6AE1E003BBF6E /* MyQueue.cpp */,
-				C51366922AF6AE1E003BBF6E /* MyStack.cpp */,
-				C51366912AF6AE1E003BBF6E /* Scope.cpp */,
 			);
 			path = "Source Files";
 			sourceTree = "<group>";
@@ -195,14 +180,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C51366992AF6AE1F003BBF6E /* Scope.cpp in Sources */,
 				C51366762AF6AC91003BBF6E /* main.cpp in Sources */,
 				C51366982AF6AE1F003BBF6E /* GC_Heap.cpp in Sources */,
 				C513669C2AF6AE1F003BBF6E /* GC.cpp in Sources */,
 				C513669D2AF6AE1F003BBF6E /* MyGraph.cpp in Sources */,
-				C51366972AF6AE1F003BBF6E /* MyQueue.cpp in Sources */,
 				C513669B2AF6AE1F003BBF6E /* garbageCollectedObject.cpp in Sources */,
-				C513669A2AF6AE1F003BBF6E /* MyStack.cpp in Sources */,
 				C513669E2AF6AE1F003BBF6E /* MyLinkedList.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

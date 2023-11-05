@@ -84,7 +84,5 @@ void GC::exitScope() {
 
 MyGraph& GC::getObjectGraph() {return this->objectGraph;}
 
-MyStack& GC::getScopeStack() {return this->scopeStack;}
-
 GC_Heap* GC::getHeap() {return this->heap;}
 

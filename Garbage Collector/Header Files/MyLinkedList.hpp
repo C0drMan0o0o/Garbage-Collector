@@ -17,8 +17,6 @@ public:
     };
     MyLinkedList();
     void insertAtTail(byte* memStart, byte* memEnd, bool allocated);
-    void deleteNode(byte*, byte*, bool);
-    void deleteAtHead();
     vector<Node*> getNodes() const;
     bool isEmpty() const;
     int getCount() const;

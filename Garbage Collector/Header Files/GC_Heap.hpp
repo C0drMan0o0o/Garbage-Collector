@@ -14,8 +14,6 @@ private:
     byte* currentPtr;
 public:
     GC_Heap(size_t);
-    byte* getMemStart() const;
-    byte* getMemEnd() const;
     byte* getCurrentPtr() const;
     byte* allocate(size_t);
     void deallocate(byte*, size_t);

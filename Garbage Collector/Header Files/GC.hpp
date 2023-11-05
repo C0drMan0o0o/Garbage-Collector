@@ -3,7 +3,6 @@
 #include "garbageCollectedObject.hpp"
 #include "MyGraph.hpp"
 #include "MyLinkedList.hpp"
-#include "MyStack.hpp"
 #include "GC_Heap.hpp"
 
 #include <unordered_set>
@@ -13,7 +12,6 @@ class GC {
 private:
     static GC* instancePtr;
     MyGraph objectGraph;
-    MyStack scopeStack;
     GC_Heap* heap = new GC_Heap(100000);
     
     GC() = default;
@@ -28,7 +26,6 @@ public:
     void enterScope();
     void exitScope();
     MyGraph& getObjectGraph();
-    MyStack& getScopeStack();
     GC_Heap* getHeap();
 };
 
