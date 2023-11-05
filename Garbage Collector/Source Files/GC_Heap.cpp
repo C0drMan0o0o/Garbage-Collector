@@ -21,7 +21,7 @@ byte* GC_Heap::allocate(size_t allocationSize) {
         // Iterate through nodes in allocationList to find a suitable free block.
         for (const auto* node : allocationList.getNodes()) {
             if (!node->allocated && node->memEnd - node->memStart >= allocationSize) {
-                // Found a suitable block in the free list.
+                // Found a suitable block in the allocation list.
                 byte* allocationAddress = node->memStart;
 
                 // Mark the block as allocated.
@@ -58,7 +58,7 @@ byte* GC_Heap::allocate(size_t allocationSize) {
 }
 
 void GC_Heap::deallocate(byte* ptr, size_t deallocationSize) {
-    // Add the deallocated block back to the free list.
+    // Add the deallocated block back to the allocation list.
     cout << "Attempting to deallocate - " << ptr << endl;
     allocationList.editNode(ptr, ptr + deallocationSize, false);
 }
