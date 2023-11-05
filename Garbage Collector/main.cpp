@@ -15,9 +15,77 @@ void process(garbageCollectedObject*);
 
 static vector<garbageCollectedObject*> myVector;
 
+inline void run();
+
+inline void useCase1();
+
+inline void useCase2();
+
 GC* gc = GC::getInstance();
 
+struct innerStruct : public garbageCollectedObject {
+    innerStruct(void *ptr) : garbageCollectedObject(ptr) {}
+    size_t getSize() override {return sizeof(*this);}
+};
+
+struct myStruct : public garbageCollectedObject {
+    innerStruct* inner1;
+    innerStruct* inner2;
+    innerStruct* inner3;
+    myStruct(void* ptr) : garbageCollectedObject(ptr), inner1(new innerStruct(this)), inner2(new innerStruct(this)), inner3(new innerStruct(this)) {}
+    size_t getSize() override {return sizeof(*this);}
+};
+
+struct testStruct : public garbageCollectedObject {
+    int length;
+    Vec* innerVecArray;
+    testStruct(void* ptr, int length) : garbageCollectedObject(ptr), length(length), innerVecArray(createArray<Vec>(this, length)) {}
+    size_t getSize() override {return sizeof(*this);}
+};
+
 int main(){
+//    ENTER_SCOPE
+//    for(int i=0;i<3;i++){
+//        myStruct* t = new myStruct(nullptr);
+//        process(t);
+//    }
+//    EXIT_SCOPE
+    
+//    ENTER_SCOPE
+//    Vec* vecArray = createArray<Vec>(nullptr, 5);
+//    process(vecArray);
+//    EXIT_SCOPE
+    
+    ENTER_SCOPE
+    
+    testStruct* testStructObj = new testStruct(nullptr, 5);
+    process(testStructObj);
+    
+    EXIT_SCOPE
+    
+
+//    useCase1();
+}
+
+void process(garbageCollectedObject*){}
+
+inline void run(){
+    cout << "Size of each object of Vec = " << sizeof(Vec) << " bytes" << "\n" << endl;
+    for(int i=0;i<3;i++){
+        ENTER_SCOPE
+        Vec* v = new Vec(nullptr);
+        process(v);
+        gc->getObjectGraph().printGraph();
+        cout << "1. Total Size = " << garbageCollectedObject::getTotalSize() << " bytes" << endl;
+        cout << endl;
+        EXIT_SCOPE
+        cout << "2. Total Size = " << garbageCollectedObject::getTotalSize() << " bytes" << endl;
+        cout << "==================================================="<<endl;
+    }
+    cout << "\nFinal Total Size = " << garbageCollectedObject::getTotalSize() << " bytes" << endl;
+}
+
+inline void useCase1(){
     ENTER_SCOPE
     cout << "Size of each object of Vec = " << sizeof(Vec) << " bytes" << "\n" << endl;
     Vec* v1 = new Vec(nullptr);
@@ -40,4 +108,12 @@ int main(){
     EXIT_SCOPE
 }
 
-void process(garbageCollectedObject*){}
+inline void useCase2(){
+    ENTER_SCOPE
+    int length = 5;
+    MyPair* MyPairArray = createArray<MyPair>(nullptr, length);
+    cout << "MyPair array = " << &MyPairArray << endl;
+    process(MyPairArray);
+    EXIT_SCOPE
+}
+
