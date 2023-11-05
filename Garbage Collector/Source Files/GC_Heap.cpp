@@ -25,7 +25,6 @@ byte* GC_Heap::allocate(size_t allocationSize) {
                 byte* allocationAddress = node->memStart;
 
                 // Mark the block as allocated.
-                cout << "Attempting to allocate - " << allocationAddress << endl;
                 allocationList.editNode(node->memStart, node->memEnd, true);
 
                 // Check if we can split the block into two (part for the allocation, part remains free).
@@ -59,7 +58,6 @@ byte* GC_Heap::allocate(size_t allocationSize) {
 
 void GC_Heap::deallocate(byte* ptr, size_t deallocationSize) {
     // Add the deallocated block back to the allocation list.
-    cout << "Attempting to deallocate - " << ptr << endl;
     allocationList.editNode(ptr, ptr + deallocationSize, false);
 }
 

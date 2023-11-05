@@ -41,9 +41,6 @@ void MyLinkedList::editNode(byte* memStart, byte* memEnd, bool changeTo) {
         }
         current = current->next;
     }
-
-//    cout << "The node you're attempting to alter was not found!" << endl;
-    cout << "Node Details - memStart(" << memStart << "), memEnd(" << memEnd << ")" << endl;
 }
 
 void MyLinkedList::print() const {
