@@ -54,7 +54,7 @@ byte* GC_Heap::allocate(size_t allocationSize) {
 
     // If there is not enough memory, handle the out-of-memory condition.
     std::cerr << "Out of memory in GC heap." << std::endl;
-    std::exit(1); // Terminate the program gracefully due to heap overflow
+    std::exit(1); // Terminate the program due to heap overflow
 }
 
 void GC_Heap::deallocate(byte* ptr, size_t deallocationSize) {
