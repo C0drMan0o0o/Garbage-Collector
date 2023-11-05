@@ -31,8 +31,6 @@ vector<MyLinkedList::Node*> MyLinkedList::getNodes() const {
 
 bool MyLinkedList::isEmpty() const {return this->head == nullptr;}
 
-int MyLinkedList::getCount() const {return this->count;} // Maybe delete this method since it isn't used
-
 void MyLinkedList::editNode(byte* memStart, byte* memEnd, bool changeTo) {
     Node* current = head;
     

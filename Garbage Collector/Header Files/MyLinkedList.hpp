@@ -19,7 +19,6 @@ public:
     void insertAtTail(byte* memStart, byte* memEnd, bool allocated);
     vector<Node*> getNodes() const;
     bool isEmpty() const;
-    int getCount() const;
     void editNode(byte*, byte*, bool);
     void print() const;
 private:

@@ -61,11 +61,6 @@ void GC_Heap::deallocate(byte* ptr, size_t deallocationSize) {
     // Add the deallocated block back to the free list.
     cout << "Attempting to deallocate - " << ptr << endl;
     allocationList.editNode(ptr, ptr + deallocationSize, false);
-
-    // currentPtr is placed at the beginning of the address where the most recent object was deallocated
-//    if (ptr < currentPtr) {
-//        currentPtr = ptr;
-//    }
 }
 
 void GC_Heap::printAllocationList() const {this->allocationList.print();}

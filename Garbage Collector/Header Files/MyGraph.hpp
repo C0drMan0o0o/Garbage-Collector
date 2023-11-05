@@ -26,7 +26,6 @@ public:
     void removeObject(garbageCollectedObject*, size_t);
     unordered_map<garbageCollectedObject*, vector<garbageCollectedObject*>> getAdjList() const;
     vector<garbageCollectedObject*> getObjects() const;
-    bool hasEdge(garbageCollectedObject*, garbageCollectedObject*) const;
     void printConnections();
     void printRoots();
     void printGraph();

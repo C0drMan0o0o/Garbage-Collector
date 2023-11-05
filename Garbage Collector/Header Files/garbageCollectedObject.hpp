@@ -23,7 +23,6 @@ public:
     virtual ~garbageCollectedObject(){}
     static void* operator new(size_t);
     static void* operator new[](size_t);
-//    static void* operator new(size_t, void*); // Placement new operator
     void operator delete(void*, size_t);
     void operator delete[](void*, size_t);
     garbageCollectedObject* addRef();
@@ -38,26 +37,9 @@ T* createArray(void *base, size_t numOfElements) {
 
     // Initialise each element in the array using the default constructor of the templated object
     for (size_t i=0;i<numOfElements;i++) {
-        
         ::new (array + i) T(base);
-//        array[i] = T();
         std::cout << "element address = " << &array[i] << std::endl;
     }
 
     return array;
 }
-
-// Templated method to create an array of a derived class of garbageCollectedObject
-// This method is defined in the header file instead of the source file because it is a templated method and will only work if this is done
-//template <typename T>
-//T* createArray(size_t numOfElements) {
-//    // Allocate memory for the array
-//    T* array =  new T;
-//
-//    for (size_t i = 1; i < numOfElements; i++) {
-//        // Use placement new to construct objects in the allocated memory
-//        ::new (&array[i]) T;
-//    }
-//
-//    return array;
-//}

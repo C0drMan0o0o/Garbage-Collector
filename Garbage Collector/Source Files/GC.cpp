@@ -66,11 +66,6 @@ void GC::sweep() {
     this->getObjectGraph().printGraph();
 }
 
-
-bool GC::exceedsSize(size_t size){
-    return garbageCollectedObject::getTotalSize() > size;
-}
-
 void GC::enterScope() {
     GC::generation++;
 }

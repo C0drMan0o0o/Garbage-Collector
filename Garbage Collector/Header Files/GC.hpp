@@ -22,7 +22,6 @@ public:
     static GC* getInstance();
     void mark(unsigned long);
     void sweep();
-    bool exceedsSize(size_t);
     void enterScope();
     void exitScope();
     MyGraph& getObjectGraph();

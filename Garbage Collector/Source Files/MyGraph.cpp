@@ -237,16 +237,3 @@ vector<garbageCollectedObject*> MyGraph::getObjects() const {
 char MyGraph::getChar(garbageCollectedObject* ptr){
     return charMap[ptr];
 }
-
-bool MyGraph::hasEdge(garbageCollectedObject* src, garbageCollectedObject* dest) const {
-    // Check if src exists in the adjacency list
-    auto srcIt = adjList.find(src);
-    if (srcIt != adjList.end()) {
-        // Check if dest is in the list of neighbours of src
-        if (std::find(srcIt->second.begin(), srcIt->second.end(), dest) != srcIt->second.end()) {
-            // An edge from src to dest exists
-            return true;
-        }
-    }
-    return false; // No edge from src to dest
-}
