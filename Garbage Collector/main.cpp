@@ -110,7 +110,6 @@ inline void useCase3(){
     EXIT_SCOPE
 }
 
-
 inline void useCase4(){
     ENTER_SCOPE
     int length = 5;
