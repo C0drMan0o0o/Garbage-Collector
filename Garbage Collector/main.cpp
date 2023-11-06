@@ -15,11 +15,17 @@ void process(garbageCollectedObject*);
 
 static vector<garbageCollectedObject*> myVector;
 
-inline void run();
+inline void demo();
 
 inline void useCase1();
 
 inline void useCase2();
+
+inline void useCase3();
+
+inline void useCase4();
+
+inline void useCase5();
 
 GC* gc = GC::getInstance();
 
@@ -44,42 +50,22 @@ struct testStruct : public garbageCollectedObject {
 };
 
 int main(){
-//    ENTER_SCOPE
-//    for(int i=0;i<3;i++){
-//        myStruct* t = new myStruct(nullptr);
-//        process(t);
-//    }
-//    EXIT_SCOPE
-    
-//    ENTER_SCOPE
-//    Vec* vecArray = createArray<Vec>(nullptr, 5);
-//    process(vecArray);
-//    EXIT_SCOPE
-    
-    ENTER_SCOPE
-    
-    testStruct* testStructObj = new testStruct(nullptr, 5);
-    process(testStructObj);
-    
-    EXIT_SCOPE
-    
-
-//    useCase1();
+    demo();
 }
 
 void process(garbageCollectedObject*){}
 
-inline void run(){
+inline void demo(){
     cout << "Size of each object of Vec = " << sizeof(Vec) << " bytes" << "\n" << endl;
     for(int i=0;i<3;i++){
         ENTER_SCOPE
         Vec* v = new Vec(nullptr);
         process(v);
         gc->getObjectGraph().printGraph();
-        cout << "1. Total Size = " << garbageCollectedObject::getTotalSize() << " bytes" << endl;
+        cout << "Total Size Before Sweeping = " << garbageCollectedObject::getTotalSize() << " bytes" << endl;
         cout << endl;
         EXIT_SCOPE
-        cout << "2. Total Size = " << garbageCollectedObject::getTotalSize() << " bytes" << endl;
+        cout << "Total Size After Sweeping = " << garbageCollectedObject::getTotalSize() << " bytes" << endl;
         cout << "==================================================="<<endl;
     }
     cout << "\nFinal Total Size = " << garbageCollectedObject::getTotalSize() << " bytes" << endl;
@@ -109,11 +95,33 @@ inline void useCase1(){
 }
 
 inline void useCase2(){
+    for(int i=0;i<3;i++){
+        ENTER_SCOPE
+        myStruct* t = new myStruct(nullptr);
+        process(t);
+        EXIT_SCOPE
+    }
+}
+
+inline void useCase3(){
+    ENTER_SCOPE
+    Vec* vecArray = createArray<Vec>(nullptr, 5);
+    process(vecArray);
+    EXIT_SCOPE
+}
+
+
+inline void useCase4(){
     ENTER_SCOPE
     int length = 5;
     MyPair* MyPairArray = createArray<MyPair>(nullptr, length);
-    cout << "MyPair array = " << &MyPairArray << endl;
     process(MyPairArray);
     EXIT_SCOPE
 }
 
+inline void useCase5(){
+    ENTER_SCOPE
+    testStruct* testStructObj = new testStruct(nullptr, 5);
+    process(testStructObj);
+    EXIT_SCOPE
+}
