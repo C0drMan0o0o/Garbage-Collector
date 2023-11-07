@@ -27,6 +27,10 @@ inline void useCase4();
 
 inline void useCase5();
 
+inline void useCase6();
+
+inline void useCase7();
+
 GC* gc = GC::getInstance();
 
 struct innerStruct : public garbageCollectedObject {
@@ -50,7 +54,7 @@ struct testStruct : public garbageCollectedObject {
 };
 
 int main(){
-    demo();
+    useCase3(); // fails because of updated garbageCollectedObject constructor
 }
 
 void process(garbageCollectedObject*){}
@@ -71,6 +75,7 @@ inline void demo(){
     cout << "\nFinal Total Size = " << garbageCollectedObject::getTotalSize() << " bytes" << endl;
 }
 
+// Test to see that object is not deallocated if it is being referenced elsewhere outside the scope it was created in
 inline void useCase1(){
     ENTER_SCOPE
     cout << "Size of each object of Vec = " << sizeof(Vec) << " bytes" << "\n" << endl;
@@ -94,6 +99,7 @@ inline void useCase1(){
     EXIT_SCOPE
 }
 
+// Test to see that marking and sweeping works for objects with multiple objects created within them
 inline void useCase2(){
     for(int i=0;i<3;i++){
         ENTER_SCOPE
@@ -103,6 +109,8 @@ inline void useCase2(){
     }
 }
 
+
+// Test to see that marking and sweeping works for an array of given length
 inline void useCase3(){
     ENTER_SCOPE
     Vec* vecArray = createArray<Vec>(nullptr, 5);
@@ -110,6 +118,7 @@ inline void useCase3(){
     EXIT_SCOPE
 }
 
+// Test to see that marking and sweeping works for an array of given length in which each element has other objects within it
 inline void useCase4(){
     ENTER_SCOPE
     int length = 5;
@@ -118,9 +127,35 @@ inline void useCase4(){
     EXIT_SCOPE
 }
 
+// Test to see that marking and sweeping works for an object which has an array within it which will be created with a given length
 inline void useCase5(){
     ENTER_SCOPE
     testStruct* testStructObj = new testStruct(nullptr, 5);
     process(testStructObj);
+    EXIT_SCOPE
+}
+
+// Test to see that only heap allocated objects are marked and sweeped
+inline void useCase6(){
+    ENTER_SCOPE
+    Vec* heapAllocated = new Vec(nullptr, 1.3, 2.3);
+    process(heapAllocated);
+    Vec stackAllocated(nullptr, 1.2, 2.3);
+    EXIT_SCOPE
+}
+
+// Test to see that an array is not deallocated if it is being referenced elsewhere outside the scope it was created in
+inline void useCase7(){
+    ENTER_SCOPE
+    Vec* survivor = nullptr;
+
+    auto lambda = [&](){
+        ENTER_SCOPE
+        Vec* vecArray = createArray<Vec>(nullptr, 3);
+        survivor = (Vec*) vecArray->addRef();
+        EXIT_SCOPE
+    };
+
+    lambda();
     EXIT_SCOPE
 }
