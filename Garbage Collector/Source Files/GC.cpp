@@ -19,7 +19,6 @@ GC* GC::getInstance() {
     }
 }
 
-
 void GC::mark(unsigned long generation) {
     for(garbageCollectedObject* obj : this->getObjectGraph().getObjects()){
         if(obj->generation >= GC::generation && obj->getRefCount() == 1){
