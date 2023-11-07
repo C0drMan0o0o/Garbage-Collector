@@ -54,7 +54,7 @@ struct testStruct : public garbageCollectedObject {
 };
 
 int main(){
-    useCase3(); // fails because of updated garbageCollectedObject constructor
+    useCase7();
 }
 
 void process(garbageCollectedObject*){}
@@ -109,7 +109,6 @@ inline void useCase2(){
     }
 }
 
-
 // Test to see that marking and sweeping works for an array of given length
 inline void useCase3(){
     ENTER_SCOPE
@@ -152,10 +151,17 @@ inline void useCase7(){
     auto lambda = [&](){
         ENTER_SCOPE
         Vec* vecArray = createArray<Vec>(nullptr, 3);
-        survivor = (Vec*) vecArray->addRef();
+        survivor = vecArray;
+        for(Vec* ptr = vecArray; ptr<vecArray+3; ptr++){
+            ptr->addRef();
+        }
         EXIT_SCOPE
     };
 
     lambda();
+
+    for(Vec* ptr = survivor; ptr<survivor+3; ptr++){
+        ptr->removeRef();
+    }
     EXIT_SCOPE
 }

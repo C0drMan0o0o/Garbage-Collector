@@ -32,3 +32,18 @@ public:
 
 #define EXIT_SCOPE GC::getInstance()->exitScope();
 
+template <typename T>
+T* createArray(void* base, size_t numOfElements) {
+    // Allocate memory for the array
+    T* array = (T*) GC::getInstance()->getHeap()->allocate(numOfElements * sizeof(T));
+    std::cout << "Array address = " << array << std::endl;
+
+    // Initialise each element in the array using the default constructor of the templated object
+    for (size_t i=0;i<numOfElements;i++) {
+        GC::getInstance()->getObjectGraph().addObject((garbageCollectedObject*) (array + i));
+        ::new (array + i) T(base);
+        std::cout << "element address = " << &array[i] << std::endl;
+    }
+
+    return array;
+}

@@ -55,12 +55,7 @@ void GC::sweep() {
     // Remove unreachable objects from the object graph and deallocate their memory
     for (garbageCollectedObject* obj : objectsToRemove) {
         // check if the object is an array, if yes, delete it as an array, else delete it as a single object
-        if(obj->isArray) {
-            delete[] obj;
-        }
-        else {
-            delete obj;
-        }
+        delete obj;
     }
     cout << "\nAfter Sweeping:" << endl;
     this->getObjectGraph().printGraph();

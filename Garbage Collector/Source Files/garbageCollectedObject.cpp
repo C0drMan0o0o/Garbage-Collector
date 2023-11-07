@@ -13,13 +13,20 @@ size_t garbageCollectedObject::totalSize = 0;
 size_t garbageCollectedObject::getTotalSize(){return totalSize;}
 
 garbageCollectedObject::garbageCollectedObject(void* parent){
-    GC::getInstance()->getObjectGraph().addObject((garbageCollectedObject*) this);
-    if(parent != nullptr){
-        GC::getInstance()->getObjectGraph().addEdge((garbageCollectedObject*) parent, this);
-        this->createdWithinObject = true;
-        cout << "Added edge between two objects" << endl;
+    vector<MyLinkedList::Node*> nodes = GC::getInstance()->getHeap()->getNodes();
+    for(MyLinkedList::Node* node : nodes){
+        if((byte*) this >= node->memStart && (byte*) this < node->memEnd){
+            GC::getInstance()->getObjectGraph().addObject((garbageCollectedObject*) this);
+            if(parent != nullptr){
+                GC::getInstance()->getObjectGraph().addEdge((garbageCollectedObject*) parent, this);
+                this->createdWithinObject = true;
+                cout << "Added edge between two objects" << endl;
+            }
+            this->generation = GC::generation;
+            cout<< "generation updated"<<endl;
+            break;
+        }
     }
-    this->generation = GC::generation;
 }
 
 void* garbageCollectedObject::operator new(size_t size){
@@ -33,11 +40,6 @@ void* garbageCollectedObject::operator new(size_t size){
 void garbageCollectedObject::operator delete(void* ptr, size_t size) {
     totalSize -= size;
     GC::getInstance()->getObjectGraph().removeObject((garbageCollectedObject*) ptr);
-}
-
-void garbageCollectedObject::operator delete[](void* ptr, size_t size) {
-    totalSize -= size;
-    GC::getInstance()->getObjectGraph().removeObject((garbageCollectedObject*) ptr, size);
 }
 
 unsigned int garbageCollectedObject::getRefCount() const {return this->refCount;}
