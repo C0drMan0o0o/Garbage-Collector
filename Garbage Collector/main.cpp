@@ -31,6 +31,8 @@ inline void useCase6();
 
 inline void useCase7();
 
+inline void useCase8();
+
 GC* gc = GC::getInstance();
 
 struct innerStruct : public garbageCollectedObject {
@@ -53,8 +55,29 @@ struct testStruct : public garbageCollectedObject {
     size_t getSize() override {return sizeof(*this);}
 };
 
+struct Human {
+    int age;
+    std::string name;
+    Human(){}
+    Human(int age, std::string name) : age(age), name(name) {}
+};
+
+class Student : public garbageCollectedObject, Human {
+public:
+    Student(void* ptr) : garbageCollectedObject(nullptr) {}
+    size_t getSize() override {return sizeof(*this);}
+};
+
+class Teacher : public garbageCollectedObject, Human {
+private:
+    Student* students;
+public:
+    Teacher(void* ptr, int numOfStudents) : garbageCollectedObject(ptr), students(createArray<Student>(this, numOfStudents)) {}
+    size_t getSize() override {return sizeof(*this);}
+};
+
 int main(){
-    useCase7();
+    demo();
 }
 
 void process(garbageCollectedObject*){}
@@ -163,5 +186,13 @@ inline void useCase7(){
     for(Vec* ptr = survivor; ptr<survivor+3; ptr++){
         ptr->removeRef();
     }
+    EXIT_SCOPE
+}
+
+// Test to see that objects of classes that inherit from multiple classes are marked and sweeped
+inline void useCase8(){
+    ENTER_SCOPE
+    Teacher* t = new Teacher(nullptr, 3);
+    process(t);
     EXIT_SCOPE
 }
