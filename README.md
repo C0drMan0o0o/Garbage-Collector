@@ -1,6 +1,6 @@
 # Garbage Collector
 
-A mark-and-sweep garbage collector implemented in C++, built as a GCE Computer Science programming project.
+A mark-and-sweep garbage collector implemented in C++, built as an A-level Computer Science programming project.
 
 ## Project Report
 
